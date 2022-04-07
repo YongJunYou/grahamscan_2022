@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Point2D.h"
 #include "ReadPoint.h"
 #include "Preprocess.h"
@@ -9,21 +10,19 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    string inputFileNameWithPath  = "..\\data\\percent_10\\N100000_10.txt";
-    string outputFileNameWithPath = "..\\data\\percent_10\\Result_N100000_10.txt";
+    string input_data_path  = "..\\data\\percent_10\\N100000_10.txt";
+    string output_data_path = "..\\data\\percent_10\\Result_N100000_10.txt";
 
-    Point2D inputVertices[100000];
-    read_point(inputFileNameWithPath,inputVertices);
+    vector<Point2D> inputVertices; 
+    read_point(input_data_path, inputVertices);
 
-    cout << inputVertices[0].get_x() << endl;
-
-    preprocess(inputVertices,1000000);
-
-    cout << inputVertices[0].get_x() << endl;
+    preprocess(inputVertices);
 
     GrahamScan GrahamScanAlgo;
-    GrahamScanAlgo.find_hull_vertices();
+    GrahamScanAlgo.find_hull_vertices(inputVertices);
+    
+    string fin = "finish";
+    cout << fin << endl;
 
-    cout << "finish" << endl;
     return 0;
 }

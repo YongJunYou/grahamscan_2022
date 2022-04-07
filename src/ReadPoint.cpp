@@ -3,18 +3,17 @@
 #include <sstream>
 #include <string>
 #include <vector>
-
 #include "Point2D.h"
 #include "Split.h"
 using namespace std;
 
-void read_point(string inputFileNameWithPath,Point2D inputVertices[])
+void read_point(const string input_data_path, vector<Point2D> &inputVertices)
 {
     ifstream file_s;
     string line;
     int index = 0;
     
-    file_s.open(inputFileNameWithPath);
+    file_s.open(input_data_path);
     
     if(file_s.is_open())
     {
@@ -22,14 +21,11 @@ void read_point(string inputFileNameWithPath,Point2D inputVertices[])
 
         while (getline(file_s, line))
         {
-            vector<string> result = split(line,'	'); // '	' 이게 뭔지는 모르겠지만 tab, space 둘다 인식됨
+            vector<string> result = split(line,'	');
             double p_x = stod(result[1]); 
             double p_y = stod(result[2]);
 
-            inputVertices[index].set_x(p_x);
-            inputVertices[index].set_y(p_y);
-
-            index++;
+            inputVertices.push_back(Point2D(p_x,p_y)); //
         }
     }
     file_s.close();

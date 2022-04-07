@@ -3,6 +3,6 @@
 
 using namespace std;
 
-void read_point(string inputFileNameWithPath,Point2D inputVertices[]);
+void read_point(string input_data_path, vector<Point2D> &inputVertices);
 
 #endif

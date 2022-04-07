@@ -3,6 +3,6 @@
 
 using namespace std;
 
-void preprocess(Point2D inputVertices[],int n);
+void preprocess(vector<Point2D> &inputVertices);
 
 #endif
