@@ -24,6 +24,7 @@ public:
     inline void     set_y(const double &py) { m_Y = py; };
     inline void     set_point(const Point2D &point) { m_X = point.m_X; m_Y = point.m_Y; };
     inline void     set_point(const double& px, const double& py) { m_X = px; m_Y = py; };
+    
 
 };
 

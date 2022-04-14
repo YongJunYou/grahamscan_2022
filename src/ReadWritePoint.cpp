@@ -19,7 +19,7 @@ vector<string> ReadWrite::split(string &input, const char delimiter) {
     return answer;
 }
 
-vector<Point2D> ReadWrite::read_point(const string &input_data_path, vector<Point2D> &inputVertices)
+vector<Point2D> ReadWrite::read_point(const string &input_data_path, vector<Point2D> &input_vertices)
 {
     ifstream ifile;
     string line;
@@ -38,24 +38,35 @@ vector<Point2D> ReadWrite::read_point(const string &input_data_path, vector<Poin
             double p_y = stod(result[2]);
             int p_id = stoi(result[0]);
 
-            inputVertices.push_back(Point2D(p_id,p_x,p_y));
+            input_vertices.push_back(Point2D(p_id,p_x,p_y));
         }
     }
     ifile.close();
 
-    return inputVertices;
+    return input_vertices;
 }
 
-void ReadWrite::write_point(const string &output_data_path, const vector<Point2D> &outputVertices)
+void ReadWrite::write_point(const string &output_data_path, const vector<Point2D> &output_vertices)
 {
     ofstream ofile;
     ofile.open(output_data_path);
     if(ofile.is_open())
     {
-        for (Point2D point : outputVertices)
+        for (Point2D point : output_vertices)
         {
             ofile << point.get_x() << " " << point.get_y() << endl;
         }
     }
     ofile.close();
+}
+
+bool ReadWrite::same(const vector<Point2D> &v1, const vector<Point2D> &v2) {
+    for (int i=0; i < v1.size(); i++)
+    {
+        if(v1[i].id != v2[i].id)
+        {
+			return false;
+        }
+    }
+	return true;
 }

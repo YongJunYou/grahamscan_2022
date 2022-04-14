@@ -16,41 +16,56 @@ double GrahamScan::ccw(const Point2D &p1,const Point2D &p2,const Point2D &p3)
     return v1x * v2y - v2x * v1y;
 }
 
-vector<Point2D> GrahamScan::find_hull_vertices(vector<Point2D> &inputVertices)
+vector<Point2D> GrahamScan::find_hull_vertices(vector<Point2D> &input_vertices)
 {
-    vector<Point2D> OutputVertices;
+    vector<Point2D> output_vertices;
 
-    vector<int> IndexSet;
-    IndexSet.push_back(0);
-    IndexSet.push_back(1);
+    vector<int> index_set;
+    index_set.push_back(0);
+    index_set.push_back(1);
     int next_index = 2;
 
-    while (next_index < inputVertices.size())
+    while (next_index < input_vertices.size())
     {
-        while (IndexSet.size() >= 2)
+        while (index_set.size() >= 2)
         {
             int first_index, second_index;
-            second_index = IndexSet.back();
-            IndexSet.pop_back();
-            first_index = IndexSet.back();
-            if (ccw(inputVertices[first_index], inputVertices[second_index], inputVertices[next_index]) > 0)
+            second_index = index_set.back();
+            index_set.pop_back();
+            first_index = index_set.back();
+            if (ccw(input_vertices[first_index], input_vertices[second_index], input_vertices[next_index]) > 0)
             // 바로 이전 2개의 점과 새로운 다음 점이 반 시계방향이라면 넣는다.
             {
-                IndexSet.push_back(second_index);
+                index_set.push_back(second_index);
                 break;
             }
         }
-        IndexSet.push_back(next_index++);
+        index_set.push_back(next_index++);
     }
 
-    for (int index : IndexSet)
+    for (int index : index_set)
     {
-        OutputVertices.push_back(inputVertices[index]);
+        output_vertices.push_back(input_vertices[index]);
     }
 
-    sort(OutputVertices.begin(), OutputVertices.end(), [](Point2D p1, Point2D p2){
+    /*
+    sort(output_vertices.begin(), output_vertices.end(), [](Point2D p1, Point2D p2){
         return p1.id < p2.id;
     });
+    */
+    return output_vertices;
+}
 
-    return OutputVertices;
+vector<Point2D> GrahamScan::preprocess(vector<Point2D> &input_vertices)
+{ 
+    GrahamScan::ExProductCompare Compare;
+    Point2D min_y_point = *min_element(input_vertices.begin(), input_vertices.end(), [](Point2D p1, Point2D p2){
+        return p1.get_y() < p2.get_y();
+    });
+    Compare.m_standard_point_x = min_y_point.get_x();
+    Compare.m_standard_point_y = min_y_point.get_y();
+
+    sort(input_vertices.begin(), input_vertices.end(), Compare );
+
+    return input_vertices;
 }
