@@ -7,7 +7,8 @@
 #include "ReadWritePoint.h"
 using namespace std;
 
-vector<string> ReadWrite::split(string &input, const char delimiter) {
+vector<string> ReadWrite::split(string &input, const char delimiter)
+{
     vector<string> answer;
     stringstream ss(input);
     string temp;
@@ -26,18 +27,15 @@ vector<Point2D> ReadWrite::read_point(const string &input_data_path, vector<Poin
     int index = 0;
     
     ifile.open(input_data_path);
-    
     if(ifile.is_open())
     {
         getline(ifile, line);
-
         while (getline(ifile, line))
         {
             vector<string> result = split(line,'	');
             double p_x = stod(result[1]); 
             double p_y = stod(result[2]);
             int p_id = stoi(result[0]);
-
             input_vertices.push_back(Point2D(p_id,p_x,p_y));
         }
     }

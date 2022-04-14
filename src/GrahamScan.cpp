@@ -34,7 +34,6 @@ vector<Point2D> GrahamScan::find_hull_vertices(vector<Point2D> &input_vertices)
             index_set.pop_back();
             first_index = index_set.back();
             if (ccw(input_vertices[first_index], input_vertices[second_index], input_vertices[next_index]) > 0)
-            // 바로 이전 2개의 점과 새로운 다음 점이 반 시계방향이라면 넣는다.
             {
                 index_set.push_back(second_index);
                 break;
@@ -48,11 +47,10 @@ vector<Point2D> GrahamScan::find_hull_vertices(vector<Point2D> &input_vertices)
         output_vertices.push_back(input_vertices[index]);
     }
 
-    /*
     sort(output_vertices.begin(), output_vertices.end(), [](Point2D p1, Point2D p2){
         return p1.id < p2.id;
     });
-    */
+    
     return output_vertices;
 }
 
