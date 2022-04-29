@@ -11,6 +11,8 @@ private:
 
 public:
     int id;
+
+    
     Point2D(int id, double X=0.0, double Y=0.0)
     {
         this->id = id;
